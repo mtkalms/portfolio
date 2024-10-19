@@ -2,10 +2,15 @@
   @apply text-gray-800;
 
   & > .step {
-    @apply pr-2;
+    &:not(:last-child) {
+      @apply pr-2;
+    }
 
     &:first-child {
       @apply pl-2 bg-purple-600;
+      &:last-child:after {
+        @apply text-purple-600 bg-gray-800;
+      }
     }
 
     &:not(:first-child)::before {
@@ -13,46 +18,58 @@
       content: "";
     }
 
+    &:last-child::after {
+      content: "█";
+    }
+
     &:nth-child(2) {
       @apply bg-fuchsia-600;
       &::before {
         @apply text-purple-600 bg-fuchsia-600;
       }
+      &:last-child:after {
+        @apply text-fuchsia-600 bg-gray-800;
+      }
     }
 
     &:nth-child(3) {
-      @apply bg-cyan-600;
+      @apply bg-blue-600;
       &::before {
-        @apply text-fuchsia-600 bg-cyan-600;
+        @apply text-fuchsia-600 bg-blue-600;
+      }
+      &:last-child:after {
+        @apply text-blue-600 bg-gray-800;
       }
     }
 
     &:nth-child(4) {
-      @apply bg-blue-600;
+      @apply bg-cyan-600;
       &::before {
-        @apply text-cyan-600 bg-blue-600;
+        @apply text-blue-600 bg-cyan-600;
+      }
+      &:last-child:after {
+        @apply text-cyan-600 bg-gray-800;
       }
     }
+  }
 
-    &:last-child {
-      @apply bg-green-600;
+  &.branch {
+    & > .step:last-child {
+      @apply pr-2 bg-green-600;
       &::before {
         @apply bg-green-600;
       }
+      &::after {
+        @apply bg-green-600;
+        content: none;
+      }
     }
-  }
 
-  &::after {
-    @apply text-green-600 bg-gray-800;
-    content: "";
-  }
-
-  &.dirty {
-    & > .step:last-child {
+    &.dirty > .step:last-child {
       @apply bg-yellow-500;
 
       &::after {
-        @apply pl-2;
+        @apply pl-2 text-gray-800 bg-yellow-500;
         content: "±";
       }
 
@@ -63,6 +80,11 @@
     }
 
     &::after {
+      @apply text-green-600 bg-gray-800;
+      content: "";
+    }
+    
+    &.dirty::after {
       @apply text-yellow-500 bg-gray-800;
       content: "";
     }
