@@ -1,0 +1,74 @@
+.path {
+  @apply text-gray-800;
+  
+}
+
+.path > .step {
+  @apply pr-2;
+}
+
+.path > .step:first-child {
+  @apply pl-2;
+}
+
+.path > .step:not(:first-child)::before {
+  @apply  pr-2;
+  content: "";
+}
+
+.path > .step:first-child {
+  @apply bg-purple-600
+}
+
+.path > .step:nth-child(2) {
+  @apply bg-fuchsia-600
+}
+
+.path > .step:nth-child(2)::before {
+  @apply  text-purple-600 bg-fuchsia-600;
+}
+
+.path > .step:nth-child(3) {
+  @apply  bg-cyan-600;
+}
+
+.path > .step:nth-child(3)::before {
+  @apply  text-fuchsia-600 bg-cyan-600;
+}
+
+.path > .step:nth-child(4)::before {
+  @apply  text-cyan-600;
+}
+
+.path > .step:last-child {
+  @apply bg-green-600;
+}
+
+.path > .step:last-child::before {
+  @apply pr-2  bg-green-600;
+  content: "";
+}
+
+.path::after {
+  @apply text-green-600 bg-gray-800;
+  content: "";
+}
+
+.path.dirty > .step:last-child::after {
+  @apply pl-2;
+  content: "±";
+}
+
+.path.dirty > .step:last-child {
+  @apply bg-yellow-500;
+}
+
+.path.dirty > .step:last-child::before {
+  @apply pr-2  bg-yellow-500;
+  content: "";
+}
+
+.path.dirty::after {
+  @apply text-yellow-500 bg-gray-800;
+  content: "";
+}
