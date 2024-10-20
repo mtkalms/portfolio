@@ -13,10 +13,6 @@ interface ThemeModeIconProps extends Omit<ImageProps, "src"> {
   mode: ThemeMode;
 }
 
-function getThemeMode(): ThemeMode {
-  return "theme" in localStorage ? localStorage.theme : "system";
-}
-
 function applyThemeMode(mode: ThemeMode) {
   switch (mode) {
     case "dark":
@@ -57,7 +53,11 @@ function ThemeModeIcon({ mode, ...props }: ThemeModeIconProps) {
 }
 
 function ThemeModeToggle() {
-  const [mode, setMode] = useState<ThemeMode>(getThemeMode());
+  const [mode, setMode] = useState<ThemeMode>("system");
+
+  useEffect(() => {
+    setMode("theme" in localStorage ? localStorage.theme : "system");
+  }, []);
 
   useEffect(() => {
     if (mode === "system") {
