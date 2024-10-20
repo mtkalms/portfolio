@@ -13,10 +13,11 @@ interface TerminalLine {
 interface TerminalProps {
   title?: string
   lines?: TerminalLine[];
+  className?: string;
 }
 
-function Terminal({title, lines}: TerminalProps) {
-  return <div className="text-gray-100 text-sm bg-gray-800 border-x-gray-500 border-y-gray-600 border rounded-xl overflow-hidden">
+function Terminal({title, lines, className}: TerminalProps) {
+  return <div className={`text-gray-100 text-sm bg-gray-800 border-x-gray-500 border-y-gray-600 border rounded-xl overflow-hidden ${className}`}>
     <div className="top p-2 border-b border-b-slate-700 flex align-middle">
       <div className="flex gap-2">
         <div className="h-3 w-3 bg-red-500 rounded-full"/>
@@ -27,7 +28,7 @@ function Terminal({title, lines}: TerminalProps) {
         {title}
       </div>
     </div>
-    <div className={`p-3 pb-40 text-xs ${semiBold.className}`}>
+    <div className={`p-3 text-xs ${semiBold.className}`}>
       {lines?.map((line, idxLine) => 
         <div className={`w-full ${styles.line}`} key={`line${idxLine}`}>
           <span className={[styles.path, line.status && styles[line.status], line.branch && styles.branch].join(' ')}>
