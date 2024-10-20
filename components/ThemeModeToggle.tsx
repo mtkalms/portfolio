@@ -6,7 +6,7 @@ import sun from '../public/icons/sun.svg';
 import moon from '../public/icons/moon.svg';
 import sunMoon from '../public/icons/sun-moon.svg';
 
-const MODES = ["dark", "light", "system"];
+const MODES = ["dark", "light", "system", "unset"];
 type ThemeMode = (typeof MODES)[number];
 
 interface ThemeModeIconProps extends Omit<ImageProps, "src"> {
@@ -23,7 +23,7 @@ function applyThemeMode(mode: ThemeMode) {
       localStorage.theme = mode;
       document.documentElement.classList.remove("dark");
       break;
-    default:
+    case "system":
       localStorage.removeItem("theme");
       if (window.matchMedia("(prefers-color-scheme: dark)").matches)
         document.documentElement.classList.add("dark");
@@ -53,7 +53,7 @@ function ThemeModeIcon({ mode, ...props }: ThemeModeIconProps) {
 }
 
 function ThemeModeToggle() {
-  const [mode, setMode] = useState<ThemeMode>("system");
+  const [mode, setMode] = useState<ThemeMode>("unset");
 
   useEffect(() => {
     setMode("theme" in localStorage ? localStorage.theme : "system");
