@@ -1,19 +1,73 @@
 import localFont from 'next/font/local'
-import './Terminal.css'
+import { DetailedHTMLProps, HTMLAttributes } from 'react';
  
 const semiBold = localFont({src: './../fonts/FiraCode/SemiBold.ttf', display: 'swap'})
 
-interface TerminalLine {
+type RepositoryState = "dirty" | "clean";
+
+interface TerminalLineProps extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
   path: string[];
   content: string;
-  status?: "dirty" | "clean";
+  status?: RepositoryState;
   branch?: string;
+  active?: boolean;
 }
 
 interface TerminalProps {
   title?: string
-  lines?: TerminalLine[];
+  lines?: TerminalLineProps[];
   className?: string;
+}
+
+const THEME_STEPS: {bg: string, text: string}[] = [
+  {
+    bg: "bg-fuchsia-500 dark:bg-fuchsia-600", 
+    text: "text-fuchsia-500 dark:text-fuchsia-600"
+  }, {
+    bg: "bg-purple-500 dark:bg-purple-600", 
+    text: "text-purple-500 dark:text-purple-600"
+  }, {
+    bg: "bg-blue-500 dark:text-purple-600", 
+    text: "text-blue-500 dark:text-blue-600"},
+]
+
+const THEME_BRANCH: Map<RepositoryState, {bg: string, text: string}> = new Map([
+  ["clean", {bg: "bg-green-500", text: "text-green-500"}], 
+  ["dirty", {bg: "bg-yellow-500", text: "text-yellow-500"}],
+]);
+
+const ICON_BRANCH: Map<RepositoryState, string> = new Map([
+  ["clean", ""],
+  ["dirty", " ±"],
+]);
+
+function TerminalLine({path, content, status = "clean", branch, active}: TerminalLineProps) {
+  function lastStepStyle(idx: number) {
+    let stepStyle = THEME_STEPS[idx + 1].bg;
+    let branchStyle = branch ? THEME_BRANCH.get(status)?.bg : "bg-transparent";
+    return [THEME_STEPS[idx].text, idx < path.length - 1 ? stepStyle : branchStyle].join(" ")
+  }
+
+  return <div className={"w-full my-0"}>
+    <span className="text-gray-100 dark:text-gray-800">
+      {path.map((step, idx) => <>
+        <span 
+          key={`step${idx}`} 
+          className={`px-2 ${THEME_STEPS[idx].bg}`}>
+          {step}
+        </span>
+        <span className={lastStepStyle(idx)}></span>
+      </>)}
+      {branch && <>
+        <span className={`px-2 ${THEME_BRANCH.get(status)?.bg}`}>
+           {branch}{branch && ICON_BRANCH.get(status)}
+        </span>
+        <span className={THEME_BRANCH.get(status)?.text}></span>
+      </>}
+    </span><wbr/>
+    <span className="px-2">{content}</span>
+    {active && <span className="animate-[pulse_1s_infinite]">█</span>}
+  </div>
 }
 
 function Terminal({title, lines, className}: TerminalProps) {
@@ -29,22 +83,12 @@ function Terminal({title, lines, className}: TerminalProps) {
       </div>
     </div>
     <div className={`p-3 text-xs ${semiBold.className}`}>
-      {lines?.map((line, idxLine) => 
-        <div className={"w-full"} key={`line${idxLine}`}>
-          <span className={["terminal-path", line.status && line.status, line.branch && "terminal-path-branch"].join(' ')}>
-            {line.path.map((step, idxStep) => 
-              <span key={`line${idxLine}-step${idxStep}`} 
-                className="terminal-path-step">
-                {step}
-              </span>
-            )}
-            {line.branch && <span className="terminal-path-step"> {line.branch}</span>}
-          </span><wbr/>
-          <span className="px-2">{line.content}</span>
-        </div>
+      {lines?.map((line, idx) => 
+        <TerminalLine {...line} key={`line-${idx}`} active={idx < lines.length - 1 ? line.active : true}/>
       )}
     </div>
   </div>
 }
 
 export default Terminal;
+export type { TerminalProps };
