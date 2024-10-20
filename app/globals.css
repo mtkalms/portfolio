@@ -2,7 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  @apply bg-fuchsia-600 dark:bg-fuchsia-800;
+}
+
+html::before {
+	z-index: -1;
+	position: fixed;
+	height: 120vh;
+	width: 100vw;
+	content: "That's all Folks!";
+  @apply p-9 text-center text-purple-950 dark:text-white text-xl;
+}
+
 body {
-    min-height: 100vh;
-    @apply bg-gradient-to-tr from-pink-500 to-purple-600 dark:from-pink-700 dark:to-purple-800;
+  min-height: 100vh;
+  @apply bg-gradient-to-tr from-pink-500 to-purple-600 dark:from-pink-700 dark:to-purple-800;
 }
