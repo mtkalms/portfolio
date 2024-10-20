@@ -1,20 +1,22 @@
 .path {
-  @apply text-gray-800;
+  color: #1f2937;
 
   & > .step {
     &:not(:last-child) {
-      @apply pr-2;
+      padding-right: 0.5rem;
     }
 
     &:first-child {
-      @apply pl-2 bg-purple-600;
-      &:last-child:after {
-        @apply text-purple-600 bg-gray-800;
+      padding-left: 0.5rem;
+      background: #9333ea;;
+      &:last-child::after {
+        color: #9333ea;
+        background: #1f2937;
       }
     }
 
     &:not(:first-child)::before {
-      @apply  pr-2;
+      padding-right: 0.5rem;
       content: "";
     }
 
@@ -23,69 +25,81 @@
     }
 
     &:nth-child(2) {
-      @apply bg-fuchsia-600;
+      background: #c026d3;
       &::before {
-        @apply text-purple-600 bg-fuchsia-600;
+        color: #9333ea;
+        background: #c026d3;
       }
-      &:last-child:after {
-        @apply text-fuchsia-600 bg-gray-800;
+      &:last-child::after {
+        color: #c026d3;
+        background: #1f2937;
       }
     }
 
     &:nth-child(3) {
-      @apply bg-blue-600;
+      background: #2563eb;
       &::before {
-        @apply text-fuchsia-600 bg-blue-600;
+        color: #c026d3;
+        background: #2563eb;
       }
-      &:last-child:after {
-        @apply text-blue-600 bg-gray-800;
+      &:last-child::after {
+        color: #2563eb;
+        background: #1f2937;
       }
     }
 
     &:nth-child(4) {
-      @apply bg-cyan-600;
+      background: #0891b2;
       &::before {
-        @apply text-blue-600 bg-cyan-600;
+        background: #0891b2;
+        color: #2563eb;
       }
-      &:last-child:after {
-        @apply text-cyan-600 bg-gray-800;
+      &:last-child::after {
+        color: #0891b2;
+        background: #1f2937;
       }
     }
   }
 
   &.branch {
     & > .step:last-child {
-      @apply pr-2 bg-green-600;
+      padding-right: 0.5rem;
+      background: #16a34a;
       &::before {
-        @apply bg-green-600;
+        background: #16a34a;
       }
       &::after {
-        @apply bg-green-600;
+        background: #16a34a;
         content: none;
       }
     }
 
     &.dirty > .step:last-child {
-      @apply bg-yellow-500;
+      background: #eab308;
 
       &::after {
-        @apply pl-2 text-gray-800 bg-yellow-500;
+        padding-left: 0.5rem;
+        color: #1f2937;
+        background: #eab308;
         content: "±";
       }
 
       &::before {
-        @apply pr-2  bg-yellow-500;
+        padding-right: 0.5rem;
+        background: #eab308;
         content: "";
       }
     }
 
     &::after {
-      @apply text-green-600 bg-gray-800;
+      color: #16a34a;
+      background: #1f2937;
       content: "";
     }
-    
+
     &.dirty::after {
-      @apply text-yellow-500 bg-gray-800;
+      color: #eab308;
+      background: #1f2937;
       content: "";
     }
   }
