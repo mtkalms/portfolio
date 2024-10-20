@@ -1,17 +1,27 @@
-.path {
-  color: #1f2937;
 
-  & > .step {
+.terminal-path {
+  --step-text: #1f2937;
+  --step-background: #f3f4f6;
+}
+
+html.dark .terminal-path {
+  --step-background: #1f2937;
+}
+
+.terminal-path {
+  color: var(--step-text);
+
+  & > .terminal-path-step {
     &:not(:last-child) {
       padding-right: 0.5rem;
     }
 
     &:first-child {
       padding-left: 0.5rem;
-      background: #9333ea;;
+      background: #9333ea;
       &:last-child::after {
         color: #9333ea;
-        background: #1f2937;
+        background: var(--step-background);
       }
     }
 
@@ -32,7 +42,7 @@
       }
       &:last-child::after {
         color: #c026d3;
-        background: #1f2937;
+        background: var(--step-background);
       }
     }
 
@@ -44,7 +54,7 @@
       }
       &:last-child::after {
         color: #2563eb;
-        background: #1f2937;
+        background: var(--step-background);
       }
     }
 
@@ -56,13 +66,13 @@
       }
       &:last-child::after {
         color: #0891b2;
-        background: #1f2937;
+        background: var(--step-background);
       }
     }
   }
 
-  &.branch {
-    & > .step:last-child {
+  &.terminal-path-branch {
+    & > .terminal-path-step:last-child {
       padding-right: 0.5rem;
       background: #16a34a;
       &::before {
@@ -74,12 +84,12 @@
       }
     }
 
-    &.dirty > .step:last-child {
+    &.dirty > .terminal-path-step:last-child {
       background: #eab308;
 
       &::after {
         padding-left: 0.5rem;
-        color: #1f2937;
+        color: var(--step-text);
         background: #eab308;
         content: "±";
       }
@@ -93,13 +103,13 @@
 
     &::after {
       color: #16a34a;
-      background: #1f2937;
+      background: var(--step-background);
       content: "";
     }
 
     &.dirty::after {
       color: #eab308;
-      background: #1f2937;
+      background: var(--step-background);
       content: "";
     }
   }

@@ -1,5 +1,5 @@
 import localFont from 'next/font/local'
-import styles from './Terminal.module.css'
+import './Terminal.css'
  
 const semiBold = localFont({src: './../fonts/FiraCode/SemiBold.ttf', display: 'swap'})
 
@@ -17,8 +17,8 @@ interface TerminalProps {
 }
 
 function Terminal({title, lines, className}: TerminalProps) {
-  return <div className={`text-gray-100 text-sm bg-gray-800 border-x-gray-500 border-y-gray-600 border rounded-xl overflow-hidden ${className}`}>
-    <div className="top p-2 border-b border-b-slate-700 flex align-middle">
+  return <div className={`dark:text-gray-100 text-sm bg-gray-100 dark:bg-gray-800 border-x-gray-500 border-y-gray-600 border rounded-xl overflow-hidden ${className}`}>
+    <div className="top p-2 border-b bg-gray-300 dark:bg-gray-800 border-b-slate-700 flex align-middle">
       <div className="flex gap-2">
         <div className="h-3 w-3 bg-red-500 rounded-full"/>
         <div className="h-3 w-3 bg-orange-400 rounded-full"/>
@@ -30,15 +30,15 @@ function Terminal({title, lines, className}: TerminalProps) {
     </div>
     <div className={`p-3 text-xs ${semiBold.className}`}>
       {lines?.map((line, idxLine) => 
-        <div className={`w-full ${styles.line}`} key={`line${idxLine}`}>
-          <span className={[styles.path, line.status && styles[line.status], line.branch && styles.branch].join(' ')}>
+        <div className={"w-full"} key={`line${idxLine}`}>
+          <span className={["terminal-path", line.status && line.status, line.branch && "terminal-path-branch"].join(' ')}>
             {line.path.map((step, idxStep) => 
               <span key={`line${idxLine}-step${idxStep}`} 
-                className={styles.step}>
+                className="terminal-path-step">
                 {step}
               </span>
             )}
-            {line.branch && <span className={styles.step}> {line.branch}</span>}
+            {line.branch && <span className="terminal-path-step"> {line.branch}</span>}
           </span><wbr/>
           <span className="px-2">{line.content}</span>
         </div>
