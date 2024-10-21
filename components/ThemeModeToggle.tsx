@@ -6,8 +6,8 @@ import sun from '../public/icons/sun.svg';
 import moon from '../public/icons/moon.svg';
 import sunMoon from '../public/icons/sun-moon.svg';
 
-const MODES = ["dark", "light", "system", "unset"];
-type ThemeMode = (typeof MODES)[number];
+const MODES = ["dark", "light", "system"];
+type ThemeMode = (typeof MODES)[number] | "unset";
 
 interface ThemeModeIconProps extends Omit<ImageProps, "src"> {
   mode: ThemeMode;
@@ -45,10 +45,12 @@ function ThemeModeIcon({ mode, ...props }: ThemeModeIconProps) {
         title="Toggle theme (light)"
         alt="Theme toggle button (light)"
       />;
-    default:
+    case "system":
       return <Image 
         src={sunMoon} {...props}
       />;
+    default:
+      return <div className="h-32 w-32"/>;
   }
 }
 
@@ -60,17 +62,9 @@ function ThemeModeToggle() {
   }, []);
 
   useEffect(() => {
-    if (mode === "system") {
-      let preference = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      let localTheme = "theme" in localStorage ? localStorage.theme : "light";
-      if (preference !== localTheme) {
-        applyThemeMode("system");
-      }
+    if (mode !== "unset") {
+      applyThemeMode(mode);
     }
-  });
-
-  useEffect(() => {
-    applyThemeMode(mode);
   }, [mode]);
 
   function toggle() {
