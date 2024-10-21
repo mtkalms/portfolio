@@ -78,7 +78,7 @@ function Terminal({title, lines, className}: TerminalProps) {
         <div className="h-3 w-3 bg-orange-400 rounded-full"/>
         <div className="h-3 w-3 bg-green-500 rounded-full"/>
       </div>
-      <div className="flex-grow -m-0.5 text-xs text-center text-slate-500 font-bold text">
+      <div className="flex-grow -my-0.5 px-3 text-xs text-center text-slate-500 font-bold overflow-hidden text-ellipsis text-nowrap">
         {title}
       </div>
     </div>
