@@ -7,6 +7,13 @@ const config: Config = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  theme: {
+    fontFamily: {
+      "code": ['var(--font-fira-code)'],
+      "sans": ['var(--font-inter)'],
+    },
+    extend: {},
+  },
   plugins: [],
 }
 export default config

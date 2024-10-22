@@ -1,11 +1,26 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import Image from 'next/image';
 import './globals.css';
 import ThemeModeToggle from '@/components/ThemeModeToggle';
 import next from '../public/next.svg';
+import localFont from 'next/font/local';
+import { Inter } from 'next/font/google';
 
-const inter = Inter({ subsets: ['latin'] })
+const firaCode = localFont({
+  src: [
+    {path: './../fonts/FiraCode/Bold.ttf', weight: '300'},
+    {path: './../fonts/FiraCode/Regular.ttf', weight: '400'},
+    {path: './../fonts/FiraCode/Medium.ttf', weight: '500'},
+    {path: './../fonts/FiraCode/SemiBold.ttf', weight: '600'},
+    {path: './../fonts/FiraCode/Bold.ttf', weight: '700'},
+  ], 
+  variable: '--font-fira-code'
+});
+
+const inter = Inter({
+  subsets: ['latin'] , 
+  variable: '--font-inter'
+});
 
 export const metadata: Metadata = {
   title: 'mtkalms: portfolio',
@@ -18,8 +33,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="text-black dark:text-white">
-      <body className={`flex flex-col min-h-screen ${inter.className}`}>
+    <html lang="en" className={`${firaCode.variable} text-code ${inter.variable} text-sans text-black dark:text-white`}>
+      <body className={`flex flex-col min-h-screen text-sans`}>
         <nav className="w-full top-0 left-0">
           <div className="container mx-auto max-w-screen-xl p-4 flex flex-wrap items-center justify-between">
             <div className="flex gap-4 font-semibold">

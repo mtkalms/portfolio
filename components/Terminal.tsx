@@ -1,7 +1,4 @@
-import localFont from 'next/font/local'
 import { DetailedHTMLProps, HTMLAttributes } from 'react';
- 
-const semiBold = localFont({src: './../fonts/FiraCode/SemiBold.ttf', display: 'swap'})
 
 type RepositoryState = "dirty" | "clean";
 
@@ -82,7 +79,7 @@ function Terminal({title, lines, className}: TerminalProps) {
         {title}
       </div>
     </div>
-    <div className={`sm:text-xs text-[9px] p-3 ${semiBold.className}`}>
+    <div className="font-code font-semibold sm:text-xs text-[9px] p-3">
       {lines?.map((line, idx) => 
         <TerminalLine {...line} key={`line-${idx}`} active={idx < lines.length - 1 ? line.active : true}/>
       )}
