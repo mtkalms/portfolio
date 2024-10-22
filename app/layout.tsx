@@ -18,12 +18,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="text-black dark:text-white">
       <body className={`flex flex-col min-h-screen ${inter.className}`}>
         <nav className="w-full top-0 left-0">
           <div className="container mx-auto max-w-screen-xl p-4 flex flex-wrap items-center justify-between">
-            <div className="flex gap-4 text-black dark:text-white font-semibold">
-
+            <div className="flex gap-4 font-semibold">
+              
             </div>
             <div>
               <ThemeModeToggle/>
@@ -35,7 +35,7 @@ export default function RootLayout({
         </div>
         <footer className="mt-auto">
           <div className="container mx-auto max-w-screen-xl p-4 flex items-center justify-center">
-            <div className="flex text-white gap-2">
+            <div className="flex gap-2">
               Created with
               <Image className="dark:invert" src={next} width={75} alt="next logo"/>
             </div>
