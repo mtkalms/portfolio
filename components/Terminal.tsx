@@ -71,18 +71,18 @@ function TerminalLine({path, content, status = "clean", branch, active}: Termina
 }
 
 function Terminal({title, lines, className}: TerminalProps) {
-  return <div className={`dark:text-gray-100 text-sm bg-gray-100 dark:bg-gray-800 border-x-gray-500 border-y-gray-600 border rounded-xl overflow-hidden ${className}`}>
+  return <div className={`dark:text-gray-100 text-xs bg-gray-100 dark:bg-gray-800 border-x-gray-500 border-y-gray-600 border rounded-xl overflow-hidden ${className}`}>
     <div className="top p-2 border-b bg-gray-300 dark:bg-gray-800 border-b-slate-700 flex align-middle">
       <div className="flex gap-2">
         <div className="h-3 w-3 bg-red-500 rounded-full"/>
         <div className="h-3 w-3 bg-orange-400 rounded-full"/>
         <div className="h-3 w-3 bg-green-500 rounded-full"/>
       </div>
-      <div className="flex-grow -my-0.5 px-3 text-xs text-center text-slate-500 font-bold overflow-hidden text-ellipsis text-nowrap">
+      <div className="flex-grow -my-0.5 px-3 text-center text-slate-500 font-bold overflow-hidden text-ellipsis text-nowrap">
         {title}
       </div>
     </div>
-    <div className={`p-3 text-xs ${semiBold.className}`}>
+    <div className={`sm:text-xs text-[9px] p-3 ${semiBold.className}`}>
       {lines?.map((line, idx) => 
         <TerminalLine {...line} key={`line-${idx}`} active={idx < lines.length - 1 ? line.active : true}/>
       )}

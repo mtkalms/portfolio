@@ -15,6 +15,5 @@ html::before {
 }
 
 body {
-  min-height: 100vh;
   @apply bg-gradient-to-tr from-pink-500 to-purple-600 dark:from-pink-700 dark:to-purple-800;
 }
