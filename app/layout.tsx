@@ -5,6 +5,7 @@ import ThemeModeToggle from '@/components/ThemeModeToggle';
 import next from '../public/next.svg';
 import localFont from 'next/font/local';
 import { Inter } from 'next/font/google';
+import { ThemeProvider } from 'next-themes';
 
 const firaCode = localFont({
   src: [
@@ -33,8 +34,9 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${firaCode.variable} text-code ${inter.variable} text-sans text-black dark:text-white`}>
+    <html lang="en" suppressHydrationWarning className={`${firaCode.variable} text-code ${inter.variable} text-sans text-black dark:text-white`}>
       <body className={`flex flex-col min-h-screen text-sans`}>
+        <ThemeProvider attribute="class">
         <nav className="w-full top-0 left-0">
           <div className="container mx-auto max-w-screen-xl p-4 flex flex-wrap items-center justify-between">
             <div className="flex gap-4 font-semibold">
@@ -56,6 +58,7 @@ export default function RootLayout({
             </div>
           </div>
         </footer>
+        </ThemeProvider>
       </body>
     </html>
   )

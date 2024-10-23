@@ -1,7 +1,8 @@
 'use client'
 
-import { useEffect, useState } from "react";
 import Image, { ImageProps } from 'next/image';
+import { useTheme } from "next-themes";
+
 import sun from '../public/icons/sun.svg';
 import moon from '../public/icons/moon.svg';
 import sunMoon from '../public/icons/sun-moon.svg';
@@ -11,24 +12,6 @@ type ThemeMode = (typeof MODES)[number] | "unset";
 
 interface ThemeModeIconProps extends Omit<ImageProps, "src"> {
   mode: ThemeMode;
-}
-
-function applyThemeMode(mode: ThemeMode) {
-  switch (mode) {
-    case "dark":
-      localStorage.theme = mode;
-      document.documentElement.classList.add("dark");
-      break;
-    case "light":
-      localStorage.theme = mode;
-      document.documentElement.classList.remove("dark");
-      break;
-    case "system":
-      localStorage.removeItem("theme");
-      if (window.matchMedia("(prefers-color-scheme: dark)").matches)
-        document.documentElement.classList.add("dark");
-      break;
-  }
 }
 
 function ThemeModeIcon({ mode, ...props }: ThemeModeIconProps) {
@@ -46,39 +29,28 @@ function ThemeModeIcon({ mode, ...props }: ThemeModeIconProps) {
         alt="Theme toggle button (light)"
       />;
     case "system":
+    default:
       return <Image 
         src={sunMoon} {...props}
       />;
-    default:
-      return <div className="h-[30px] w-[30px]"/>;
   }
 }
 
 function ThemeModeToggle() {
-  const [mode, setMode] = useState<ThemeMode>("unset");
-
-  useEffect(() => {
-    setMode("theme" in localStorage ? localStorage.theme : "system");
-  }, []);
-
-  useEffect(() => {
-    if (mode !== "unset") {
-      applyThemeMode(mode);
-    }
-  }, [mode]);
+  const { theme, setTheme } = useTheme();
 
   function toggle() {
-    setMode(MODES[(MODES.indexOf(mode) + 1) % MODES.length]);
+    setTheme(MODES[(MODES.indexOf(theme as ThemeMode) + 1) % MODES.length]);
   }
 
   return (
     <button type="button" onClick={toggle}>
-      <ThemeModeIcon mode={mode}
+      <ThemeModeIcon mode={theme as ThemeMode}
         className="dark:invert"
-        title={`Toggle theme (${mode})`}
-        alt={`Theme toggle button (${mode})`}
-        width={30}
-        height={30}
+        title={`Toggle theme (${theme})`}
+        alt={`Theme toggle button (${theme})`}
+        width={30} height={30}  
+        suppressHydrationWarning
       />
     </button>
   );
