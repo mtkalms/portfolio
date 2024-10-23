@@ -6,13 +6,17 @@ import { useTheme } from "next-themes";
 import sun from '../public/icons/sun.svg';
 import moon from '../public/icons/moon.svg';
 import sunMoon from '../public/icons/sun-moon.svg';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
 
 const MODES = ["dark", "light", "system"];
 type ThemeMode = (typeof MODES)[number] | "unset";
 
 interface ThemeModeIconProps extends Omit<ImageProps, "src"> {
-  mode: ThemeMode;
+  mode?: ThemeMode;
+}
+
+interface ThemeModeToggleProps extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
+  size?: number;
 }
 
 function ThemeModeIcon({ mode, ...props }: ThemeModeIconProps) {
@@ -41,7 +45,7 @@ function ThemeModeIcon({ mode, ...props }: ThemeModeIconProps) {
   }
 }
 
-function ThemeModeToggle() {
+function ThemeModeToggle({size = 25}: ThemeModeToggleProps) {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -58,7 +62,7 @@ function ThemeModeToggle() {
       <Image src={sunMoon}
         className="dark:invert opacity-50"
         alt="placeholder"   
-        width={30} height={30}/>
+        width={size} height={size}/>
     </button>
   }
 
@@ -68,7 +72,7 @@ function ThemeModeToggle() {
         className="dark:invert"
         title={`Toggle theme (${theme})`}
         alt={`Theme toggle button (${theme})`}
-        width={30} height={30}  
+        width={size} height={size}  
         suppressHydrationWarning
       />
     </button>
