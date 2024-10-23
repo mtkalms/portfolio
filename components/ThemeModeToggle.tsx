@@ -50,7 +50,7 @@ function ThemeModeIcon({ mode, ...props }: ThemeModeIconProps) {
         src={sunMoon} {...props}
       />;
     default:
-      return <div className="h-32 w-32"/>;
+      return <div className="h-[30px] w-[30px]"/>;
   }
 }
 
