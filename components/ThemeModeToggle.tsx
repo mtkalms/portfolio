@@ -6,6 +6,7 @@ import { useTheme } from "next-themes";
 import sun from '../public/icons/sun.svg';
 import moon from '../public/icons/moon.svg';
 import sunMoon from '../public/icons/sun-moon.svg';
+import { useState, useEffect } from 'react';
 
 const MODES = ["dark", "light", "system"];
 type ThemeMode = (typeof MODES)[number] | "unset";
@@ -29,6 +30,10 @@ function ThemeModeIcon({ mode, ...props }: ThemeModeIconProps) {
         alt="Theme toggle button (light)"
       />;
     case "system":
+      console.log("nay")
+      return <Image 
+        src={sunMoon} {...props}
+      />;
     default:
       return <Image 
         src={sunMoon} {...props}
@@ -38,9 +43,23 @@ function ThemeModeIcon({ mode, ...props }: ThemeModeIconProps) {
 
 function ThemeModeToggle() {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
   function toggle() {
     setTheme(MODES[(MODES.indexOf(theme as ThemeMode) + 1) % MODES.length]);
+  }
+
+  useEffect(() => {
+    setMounted(true);
+  }, [])
+
+  if (!mounted) {
+    return <button>
+      <Image src={sunMoon}
+        className="dark:invert opacity-50"
+        alt="placeholder"   
+        width={30} height={30}/>
+    </button>
   }
 
   return (
