@@ -47,7 +47,7 @@ export default function RootLayout({
             </div>
           </div>
         </nav>
-        <div className="flex-grow flex container mx-auto max-w-screen-xl p-4">
+        <div className="flex-grow flex flex-col container mx-auto max-w-screen-xl p-4">
           {children}
         </div>
         <footer className="mt-auto">
