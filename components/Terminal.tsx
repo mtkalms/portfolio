@@ -2,7 +2,7 @@ import { DetailedHTMLProps, HTMLAttributes } from 'react';
 
 type RepositoryState = "dirty" | "clean";
 
-interface TerminalLineProps extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
+interface TerminalLineProps{
   path: string[];
   content: string;
   status?: RepositoryState;
@@ -10,10 +10,9 @@ interface TerminalLineProps extends DetailedHTMLProps<HTMLAttributes<HTMLElement
   active?: boolean;
 }
 
-interface TerminalProps {
+interface TerminalProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   title?: string
   lines?: TerminalLineProps[];
-  className?: string;
 }
 
 const THEME_STEPS: {bg: string, text: string}[] = [
@@ -45,7 +44,7 @@ function TerminalLine({path, content, status = "clean", branch, active}: Termina
     return [THEME_STEPS[idx].text, idx < path.length - 1 ? stepStyle : branchStyle].join(" ")
   }
 
-  return <div className={"w-full my-0"}>
+  return <div className="w-full my-0">
     <span className="text-gray-100 dark:text-gray-800">
       {path.map((step, idx) => <>
         <span 
@@ -67,8 +66,8 @@ function TerminalLine({path, content, status = "clean", branch, active}: Termina
   </div>
 }
 
-function Terminal({title, lines, className}: TerminalProps) {
-  return <div className={`dark:text-gray-100 text-xs bg-gray-100 dark:bg-gray-800 border-x-gray-500 border-y-gray-600 border rounded-xl overflow-hidden ${className}`}>
+function Terminal({title, lines, className, ...props}: TerminalProps) {
+  return <div className={`dark:text-gray-100 text-xs bg-gray-100 dark:bg-gray-800 border-x-gray-500 border-y-gray-600 border rounded-xl overflow-hidden ${className}`} {...props}>
     <div className="top p-2 border-b bg-gray-300 dark:bg-gray-800 border-b-slate-700 flex align-middle">
       <div className="flex gap-2">
         <div className="h-3 w-3 bg-red-500 rounded-full"/>
