@@ -9,7 +9,7 @@ import sunMoon from '../public/icons/sun-moon.svg';
 import { useState, useEffect, ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
 
 const MODES = ["dark", "light", "system"];
-type ThemeMode = (typeof MODES)[number] | "unset";
+type ThemeMode = (typeof MODES)[number];
 
 interface ThemeModeIconProps extends Omit<ImageProps, "src"> {
   mode?: ThemeMode;
@@ -24,20 +24,12 @@ function ThemeModeIcon({ mode, ...props }: ThemeModeIconProps) {
     case "dark":
       return <Image 
         src={moon} {...props}
-        title="Toggle theme (dark)"
-        alt="Theme toggle button (dark)"
       />;
     case "light":
       return <Image 
         src={sun} {...props}
-        title="Toggle theme (light)"
-        alt="Theme toggle button (light)"
       />;
     case "system":
-      console.log("nay")
-      return <Image 
-        src={sunMoon} {...props}
-      />;
     default:
       return <Image 
         src={sunMoon} {...props}
@@ -45,7 +37,7 @@ function ThemeModeIcon({ mode, ...props }: ThemeModeIconProps) {
   }
 }
 
-function ThemeModeToggle({size = 25}: ThemeModeToggleProps) {
+function ThemeModeToggle({size = 25, ...props}: ThemeModeToggleProps) {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -67,7 +59,7 @@ function ThemeModeToggle({size = 25}: ThemeModeToggleProps) {
   }
 
   return (
-    <button type="button" onClick={toggle}>
+    <button type="button" onClick={toggle} {...props}>
       <ThemeModeIcon mode={theme as ThemeMode}
         className="dark:invert"
         title={`Toggle theme (${theme})`}
