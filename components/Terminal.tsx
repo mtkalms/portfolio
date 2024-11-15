@@ -13,6 +13,9 @@ interface TerminalLineProps {
 interface TerminalProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   title: string,
   children?: ReactElement<TerminalLineProps> | ReactElement<TerminalLineProps>[],
+  onClose?: () => void,
+  onMinimize?: () => void,
+  onMaximize?: () => void,
 }
 
 const THEME_STEPS: {bg: string, text: string}[] = [
@@ -75,6 +78,9 @@ function TerminalLine({
 
 function Terminal({
   title, 
+  onClose,
+  onMinimize,
+  onMaximize,
   className, 
   children, 
   ...props
@@ -82,9 +88,9 @@ function Terminal({
   return <div className={`dark:text-gray-100 text-xs bg-gray-100 dark:bg-gray-800 border-x-gray-500 border-y-gray-600 border rounded-xl overflow-hidden ${className}`} {...props}>
     <div className="top p-2 border-b bg-gray-300 dark:bg-gray-800 border-b-slate-700 flex align-middle">
       <div className="flex gap-2">
-        <div className="h-3 w-3 bg-red-500 rounded-full"/>
-        <div className="h-3 w-3 bg-orange-400 rounded-full"/>
-        <div className="h-3 w-3 bg-green-500 rounded-full"/>
+        <div className="h-3 w-3 bg-red-500 rounded-full" onClick={onClose}/>
+        <div className="h-3 w-3 bg-orange-400 rounded-full" onClick={onMinimize}/>
+        <div className="h-3 w-3 bg-green-500 rounded-full" onClick={onMaximize}/>
       </div>
       <div className="flex-grow -my-0.5 px-3 text-center text-slate-500 font-bold overflow-hidden text-ellipsis text-nowrap">
         {title}
