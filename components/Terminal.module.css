@@ -1,0 +1,9 @@
+.buttons > div > svg {
+  opacity: 0;
+  transition-property: opacity;
+  transition-duration: 0.2s;
+}
+
+.buttons:hover > div > svg {
+  opacity: .6;
+}

@@ -1,4 +1,5 @@
 import { DetailedHTMLProps, HTMLAttributes, ReactElement } from 'react';
+import styles from "./Terminal.module.css"
 
 type RepositoryState = "dirty" | "clean";
 
@@ -87,10 +88,22 @@ function Terminal({
 }: TerminalProps) {
   return <div className={`dark:text-gray-100 text-xs bg-gray-100 dark:bg-gray-800 border-x-gray-500 border-y-gray-600 border rounded-xl overflow-hidden ${className}`} {...props}>
     <div className="top p-2 border-b bg-gray-300 dark:bg-gray-800 border-b-slate-700 flex align-middle">
-      <div className="flex gap-2">
-        <div className="h-3 w-3 bg-red-500 rounded-full" onClick={onClose}/>
-        <div className="h-3 w-3 bg-orange-400 rounded-full" onClick={onMinimize}/>
-        <div className="h-3 w-3 bg-green-500 rounded-full" onClick={onMaximize}/>
+      <div className={`flex gap-2 ${styles.buttons}`}>
+        <div className="h-3 w-3 p-[0.0625rem] bg-red-500 rounded-full" onClick={onClose}>
+          <svg className="w-2.5 h-2.5 text-gray-800 opacity-60" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M6 18 18 6M18 18 6 6"/>
+          </svg>
+        </div>
+        <div className="h-3 w-3 p-[0.0625rem] bg-orange-400 rounded-full" onClick={onMinimize}>
+          <svg className="w-2.5 h-2.5 text-gray-800 opacity-0 hover:opacity-60" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 12h14"/>
+          </svg>
+        </div>
+        <div className="h-3 w-3 p-[0.0625rem] bg-green-500 rounded-full" onClick={onMaximize}>
+          <svg className="w-2.5 h-2.5 text-gray-800 fill-gray-800 opacity-60" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M6 6 12 6 6 12 6 6M18 18 12 18 18 12 18 18"/>
+          </svg>
+        </div>
       </div>
       <div className="flex-grow -my-0.5 px-3 text-center text-slate-500 font-bold overflow-hidden text-ellipsis text-nowrap">
         {title}
