@@ -1,18 +1,18 @@
-import { DetailedHTMLProps, HTMLAttributes } from 'react';
+import { DetailedHTMLProps, HTMLAttributes, ReactElement } from 'react';
 
 type RepositoryState = "dirty" | "clean";
 
-interface TerminalLineProps{
-  path: string[];
-  content: string;
-  status?: RepositoryState;
-  branch?: string;
-  active?: boolean;
+interface TerminalLineProps {
+  path?: string,
+  status?: RepositoryState,
+  branch?: string,
+  active?: boolean,
+  children?: string,
 }
 
 interface TerminalProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  title?: string
-  lines?: TerminalLineProps[];
+  title: string,
+  children?: ReactElement<TerminalLineProps> | ReactElement<TerminalLineProps>[],
 }
 
 const THEME_STEPS: {bg: string, text: string}[] = [
@@ -37,19 +37,24 @@ const ICON_BRANCH: Map<RepositoryState, string> = new Map([
   ["dirty", " ±"],
 ]);
 
-function TerminalLine({path, content, status = "clean", branch, active}: TerminalLineProps) {
+function TerminalLine({
+  path, 
+  children, 
+  status = "clean", 
+  branch, 
+  active
+}: TerminalLineProps) {
+  
   function lastStepStyle(idx: number) {
     let stepStyle = THEME_STEPS[idx + 1].bg;
     let branchStyle = branch ? THEME_BRANCH.get(status)?.bg : "bg-transparent";
-    return [THEME_STEPS[idx].text, idx < path.length - 1 ? stepStyle : branchStyle].join(" ")
+    return [THEME_STEPS[idx].text, idx < (path?.split("/").length || 0) - 1 ? stepStyle : branchStyle].join(" ")
   }
 
   return <div className="w-full my-0">
     <span className="text-gray-100 dark:text-gray-800">
-      {path.map((step, idx) => <>
-        <span 
-          key={`step${idx}`} 
-          className={`px-2 ${THEME_STEPS[idx].bg}`}>
+      {path?.split("/").map((step, idx) => <>
+        <span className={`px-2 ${THEME_STEPS[idx].bg}`} key={`step${idx}`}>
           {step}
         </span>
         <span className={lastStepStyle(idx)}></span>
@@ -61,12 +66,19 @@ function TerminalLine({path, content, status = "clean", branch, active}: Termina
         <span className={THEME_BRANCH.get(status)?.text}></span>
       </>}
     </span><wbr/>
-    <span className="px-2">{content}</span>
-    {active && <span className="animate-[pulse_1s_infinite]">█</span>}
+    <span className="pl-2">
+      {children}
+    </span>
+    {active && <span className="animate-[pulse_0.7s_infinite]">█</span>}
   </div>
 }
 
-function Terminal({title, lines, className, ...props}: TerminalProps) {
+function Terminal({
+  title, 
+  className, 
+  children, 
+  ...props
+}: TerminalProps) {
   return <div className={`dark:text-gray-100 text-xs bg-gray-100 dark:bg-gray-800 border-x-gray-500 border-y-gray-600 border rounded-xl overflow-hidden ${className}`} {...props}>
     <div className="top p-2 border-b bg-gray-300 dark:bg-gray-800 border-b-slate-700 flex align-middle">
       <div className="flex gap-2">
@@ -79,12 +91,12 @@ function Terminal({title, lines, className, ...props}: TerminalProps) {
       </div>
     </div>
     <div className="font-code font-semibold sm:text-xs text-[9px] p-3">
-      {lines?.map((line, idx) => 
-        <TerminalLine {...line} key={`line-${idx}`} active={idx < lines.length - 1 ? line.active : true}/>
-      )}
+      {children}
     </div>
   </div>
 }
+
+Terminal.Line = TerminalLine;
 
 export default Terminal;
 export type { TerminalProps };
